@@ -1,0 +1,619 @@
+/* general styles */
+
+/* reset styles */
+
+.agile_carousel img {border: 0;}
+
+.agile_carousel p, .agile_carousel ul, .agile_carousel ul li {
+margin: 0;
+padding: 0;
+}
+
+/* agile carousel styles */
+
+/* -----------------------------------*/
+/*-- outer containers --*/
+/* -----------------------------------*/
+
+/*-- the most outer container rendered by JS 
+Contains .slides .slide_content_... .persistent_content and controls that have "no_control_set" --*/
+
+.agile_carousel {
+position: relative;
+overflow: hidden;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+}
+
+/*-- container for all slides only --*/
+
+.agile_carousel .slides {
+position: absolute;
+top: 0;
+left: 0;
+}
+
+/*-- individual slide --*/
+
+.agile_carousel .slide {
+float: left;
+}
+
+
+/* -----------------------------------*/
+/*-- default style for controls --*/
+/* -----------------------------------*/
+
+
+/*-- default styles for all control sets --*/
+
+.agile_carousel .control_set {
+position: absolute;
+z-index: 4000;
+}
+
+/*-- default styles for all button containers --*/
+
+.agile_carousel .button_container {
+z-index: 5000;	
+}
+
+/*-- default style for controls whose trigger type is "hover" --*/
+
+.agile_carousel .ac_hover {
+cursor:text;	
+}
+
+/*-- default style for controls which are currently selected
+such as the current slide number --*/
+
+.agile_carousel .ac_selected {
+}
+
+/*-- default style for disabled controls 
+"previous" and "next" controls may be disabled near the first/last slide --*/
+
+.agile_carousel .ac_disabled {
+}
+
+/*-- style applied to all controls --*/
+
+.slide_button {
+z-index: 5000;
+cursor: pointer;
+display: block;
+background-position: 0 0;
+background-repeat: no-repeat;
+position: relative;
+}
+
+/*-- previous button --*/
+
+.previous_button {
+}
+
+/*-- next button --*/
+
+.next_button {
+}
+
+/*-- hover previous button --*/
+
+.hover_previous_button {
+}
+
+/*-- hover next button --*/
+
+.hover_next_button {
+}
+
+/*-- numbered buttons container --*/
+
+.agile_carousel .numbered_buttons_container {
+}
+
+/*-- numbered button --*/
+
+.agile_carousel .numbered_button {
+float: left;
+}
+
+/*-- grouped numbered buttons container --*/
+
+.agile_carousel .grouped_numbered_buttons_container {
+}
+
+/*-- group numbered button --*/
+
+.agile_carousel .grouped_numbered_button {
+float: left;
+}
+
+/*-- content buttons container --*/
+
+.agile_carousel .content_buttons_container {
+}
+
+/*-- content button --*/
+
+.agile_carousel .content_button {
+}
+
+/*-- thumbnail buttons container --*/
+
+.agile_carousel .thumbnail_buttons_container {
+}
+
+/*-- thumbnail button --*/
+
+.agile_carousel .thumbnail_button {
+}
+
+
+/* -------------------------------------------- */
+/*-- "things" that are not slides or controls --*/
+/* -------------------------------------------- */
+
+.current_slide_number {
+cursor: text;
+}
+
+.slide_count {
+cursor: text;
+}
+
+/* -------------------------------------------- */
+/*-- #basic_slideshow styles --*/
+/* -------------------------------------------- */
+
+/*-- hide the captions --*/
+#basic_slideshow .caption {
+display: none;
+}
+
+
+/* -------------------------------------------- */
+/*-- #multiple_slides_visible styles --*/
+/* -------------------------------------------- */
+
+/*-- outer container --*/
+
+#multiple_slides_visible .agile_carousel {
+overflow: hidden;
+-moz-box-shadow: 0px 0px 4px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 4px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+background-color: #ededeb;
+}
+
+/*-- slide container --*/
+
+#multiple_slides_visible .slides {
+margin-top: 28px;
+}
+
+/*-- individual slides --*/
+
+#multiple_slides_visible .slide_inner {
+text-align: center;	
+}
+#multiple_slides_visible .slide_inner {
+overflow: hidden;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+border: 1px solid #cfcece;
+background-color: #fff;
+text-align: center;
+width: 144px;
+margin: 0 auto;
+}
+
+/*-- large photos --*/
+
+#multiple_slides_visible .photo_link {
+width: 129px;
+height: 137px;
+overflow: hidden;
+display: block;
+margin: 8px auto 4px;
+}
+#multiple_slides_visible .photo {
+height: 137px;
+}
+
+/*-- for the links beneath the photos --*/
+
+#multiple_slides_visible .caption:link, #multiple_slides_visible .caption:visited, #multiple_slides_visible .caption:hover {
+color: #333333;
+text-decoration: none;
+width: 128px;
+display: block;
+margin: 0 auto;
+padding-bottom: 3px;
+}
+#multiple_slides_visible .caption:hover {
+text-decoration: underline;
+}
+#multiple_slides_visible .persistent_content{
+position: absolute;
+top: 2px;
+left: 12px;
+font-size: 14px;
+text-shadow: 0px 1px 1px #ccc;
+color: #B5B5B5;
+}
+
+/*-- .control_set_1 - includes: .previous_next_button --*/
+
+#multiple_slides_visible .control_set_1 {
+float: right;
+position: relative;
+margin: 4px 6px 0;
+}
+#multiple_slides_visible .previous_next_button {
+width: 16px;
+height: 16px;
+overflow: hidden;
+text-indent: 1000px;
+background-image: url(../images/sprite_ac_normal.png);
+background-color: #ccc;
+border: 1px solid #cfcece;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+background-color: #fff;
+-moz-box-shadow: 0px 0px 2px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 2px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+}
+#multiple_slides_visible .previous_button {
+background-position: 4px 3px;
+}
+#multiple_slides_visible .next_button {
+background-position: -44px 3px;
+}
+#multiple_slides_visible .previous_next_button:hover {
+background-color: #f7f7f7;
+}
+#multiple_slides_visible .previous_button:hover {
+background-image: url(../images/sprite_ac_hover.png);
+}
+#multiple_slides_visible .next_button:hover {
+background-image: url(../images/sprite_ac_hover.png);
+}
+#multiple_slides_visible .control_set_1 .ac_disabled {
+background-image: url(../images/sprite_ac_disabled.png);
+}
+		
+/*-- .control_set_2 - includes: group_numbered_buttons --*/
+
+#multiple_slides_visible .control_set_2 {
+float: right;
+position: relative;
+margin: 8px 0 0 0;
+}
+#multiple_slides_visible .slide_button {
+float: left;
+}
+#multiple_slides_visible .group_numbered_buttons_container {
+float: left;
+margin-right: 14px;
+}
+#multiple_slides_visible .group_numbered_button {
+color: #000;
+padding: 0 2px;
+font-size: 12px;
+margin-right: 2px;
+background-image: url(../images/sprite_ac_normal.png);
+background-position: -95px 0;
+width: 10px;
+height: 10px;
+overflow: hidden;
+text-indent: 1000px;
+background-color: transparent;
+}
+#multiple_slides_visible .group_numbered_button:hover, #multiple_slides_visible .group_numbered_buttons_container .ac_selected {
+background-image: url(../images/sprite_ac_hover.png);
+}
+
+
+/* -------------------------------------------- */
+/*-- #flavor_1 styles --*/
+/* -------------------------------------------- */
+
+/*-- outer container --*/
+
+#flavor_1 .agile_carousel {
+overflow: hidden;
+-moz-box-shadow: 0px 0px 4px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 4px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+}
+
+/*-- hide the captions --*/
+#flavor_1 .caption {
+display: none;
+}
+
+/*-- .control_set_1 - includes: numbered_buttons --*/
+
+#flavor_1 .control_set_1 {
+float: right;
+position: relative;
+margin: 6px 2px 0 0;
+}
+#flavor_1 .numbered_buttons_container {
+float: left;
+}
+#flavor_1 .control_set_1 .slide_button {
+float: left;
+}
+#flavor_1 .numbered_button {
+color: #000;
+padding: 2px 5px;
+font-size: 12px;
+margin-right: 4px;
+background-color: #d9d9d9;
+opacity: .6;
+}
+#flavor_1 .numbered_buttons_container .ac_selected, #flavor_1 .numbered_buttons_container .numbered_button:hover {
+color: #fff;
+background-color: #666;
+opacity: .9;
+}
+
+/*-- "no control set" - includes: .hover_previous_button, .hover_next_button --*/
+
+.hover_previous_next_button {
+position: absolute;
+top: 30px;
+width: 90px;
+height: 150px;
+}
+.hover_previous_next_button .hover_previous_next_button_inner {
+position: absolute;
+top: 60px;
+background-color: #d9d9d9;
+opacity: 0.5;
+width: 54px;
+height: 35px;
+display: block;
+overflow: hidden;
+text-indent: 1000px;
+background-image: url(../images/sprite_ac_normal.png);
+background-repeat: no-repeat;
+}
+.hover_previous_button {
+left: 0px;
+}
+.hover_next_button {
+right: 0px;
+}
+.hover_previous_button .hover_previous_next_button_inner {
+left: 0px;
+-webkit-border-top-right-radius: 10px;
+-webkit-border-bottom-right-radius: 10px;
+-moz-border-radius-topright: 10px;
+-moz-border-radius-bottomright: 10px;
+border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;
+background-position: -298px 8px;
+}
+.hover_next_button .hover_previous_next_button_inner {
+right: 0px;
+-webkit-border-top-left-radius: 10px;
+-webkit-border-bottom-left-radius: 10px;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-bottomleft: 10px;
+border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;
+background-position: -351px 8px;
+}
+#flavor_1 .persistent_content {
+top: 100px;
+left: 10px;
+color: #ccc;
+position: absolute;
+z-index: 5000;
+}
+
+
+/* -------------------------------------------- */
+/*-- #flavor_2 styles --*/
+/* -------------------------------------------- */
+
+/*-- outer container --*/
+
+#flavor_2 .agile_carousel {
+overflow: hidden;
+-moz-box-shadow: 0px 0px 4px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 4px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+}
+
+/*-- hide the captions --*/
+#flavor_2 .caption {
+display: none;
+}
+
+/*-- .control_set_1 - includes: numbered_buttons, .previous_next_button, .pause_button --*/
+
+#flavor_2 .control_set_1 {
+float: right;
+position: relative;
+margin: 6px 6px 0 0;
+background-color: #d9d9d9;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+opacity: 0.5;
+padding: 2px 8px;
+}
+#flavor_2 .numbered_buttons_container {
+float: left;
+margin-right: 14px;
+}
+#flavor_2 .control_set_1 .slide_button {
+float: left;
+}
+#flavor_2 .numbered_button {
+color: #000;
+padding: 0 2px;
+font-size: 12px;
+margin-right: 2px;
+}
+#flavor_2 .numbered_buttons_container .ac_selected, #flavor_2 .numbered_buttons_container .numbered_button:hover {
+color: #fff;
+background-color: #666;
+}
+#flavor_2 .previous_next_button,.pause_button {
+width: 10px;
+height: 18px;
+overflow: hidden;
+text-indent: 1000px;
+background-image: url(../images/sprite_ac_normal.png);
+}
+#flavor_2 .previous_button {
+background-position: 0 3px;
+}
+#flavor_2 .next_button {
+background-position: -48px 3px;
+}
+#flavor_2 .pause_button {
+background-position: -24px 3px;
+}
+#flavor_2 .control_set_1 .play_button {
+background-position: -70px 3px;
+}
+#flavor_2 .previous_button, #flavor_2 .pause_button {
+margin-right: 10px;
+}
+
+/*-- .control_set_2 - includes: .conent_button --*/
+
+#flavor_2 .control_set_2 {
+left: 0;
+bottom: 0;
+width: 480px;
+height: 112px;
+}
+#flavor_2 .content_button {
+float: left;
+width: 96px;
+text-align: center;
+}
+#flavor_2 .content_buttons_container .ac_selected {
+background-image: url(../images/sprite_ac_normal.png);
+background-position: -124px 0;
+}
+#flavor_2 .content_button_inner {
+background-color: #f4f3f3;
+height: 100px;
+margin-top: 12px;
+border-right: 1px solid #f4f3f3;
+border-bottom: 1px solid #f4f3f3;
+border-left: 1px solid #f4f3f3;
+}
+#flavor_2 .ac_selected .content_button_inner  {
+background-color: #dfdddd;
+border-right: 1px solid #acabab;
+border-bottom: 1px solid #acabab;
+border-left: 1px solid #acabab;
+height: 99px;
+width: 94px;
+}
+#flavor_2 .content_button p {
+margin-top: 4px;
+width: auto;
+line-height: 15px;
+}
+#flavor_2 .content_button_inner:hover {
+background-color: #dfdddd;
+}
+#flavor_2 .content_button img {
+border: 4px solid #fff;
+margin: 7px auto 0 auto;
+-moz-box-shadow: 1px 1px 1px #bcbbbb; /* FF3.5+ */
+-webkit-box-shadow: 1px 1px 1px #bcbbbb; /* Saf3.0+, Chrome */
+box-shadow: 1px 1px 1px #bcbbbb; /* Opera 10.5, IE9, Chrome 10+ */
+}
+#flavor_2 .persistent_content {
+top: 100px;
+left: 10px;
+color: #ccc;
+position: absolute;
+z-index: 5000;
+}
+
+/* -------------------------------------------- */
+/*-- #flavor_3 styles --*/
+/* -------------------------------------------- */
+
+/*-- outer container --*/
+
+#flavor_3 .agile_carousel {
+overflow: hidden;
+-moz-box-shadow: 0px 0px 4px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 4px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+}
+
+/*-- hide the captions --*/
+#flavor_3 .caption {
+display: none;
+}
+
+/*-- .control_set_1 - includes: content_buttons --*/
+
+#flavor_3 .control_set_1 {
+position: absolute;
+right: 0;
+top: 0;
+width: 208px;
+height: 224px;
+color: #fff;
+}
+#flavor_3 .content_button {
+width: 208px;
+height: 44px;
+}
+#flavor_3 .content_button_inner p {
+float: left;
+}
+#flavor_3 .content_buttons_container .ac_selected {
+background-image: url(../images/sprite_ac_normal.png);
+background-position: -244px 0;
+}
+#flavor_3 .content_button p {
+opacity: 1;
+vertical-align: auto;
+float: left;
+padding-right: 5px;
+width: 138px;
+}
+#flavor_3 .content_button_inner {
+background-color: #333;
+width: 189px;
+height: 43px;
+border-bottom: 1px solid #000;
+opacity: 0.8;
+float: right;
+}
+#flavor_3 .ac_selected .content_button_inner, #flavor_3 .ac_selected .content_button_inner:hover  {
+opacity: 0.95;
+}
+#flavor_3 .content_button_inner:hover {
+opacity: 0.9;
+}
+#flavor_3 .content_button img {
+opactiy: 1;
+}
+#flavor_3 .content_button .thumb {
+width: 37px;
+height: 37px;
+overflow: hidden;
+float: left;
+border: 1px solid #000;
+margin: 3px 3px 0 3px;
+}
