@@ -1,7 +1,11 @@
 /*
- * Agile Carousel v alpha 1
+ * Agile Carousel v alpha 1.1
  * http://agilecarousel.com/
  *
+ * Copyright 2011, Ed Talmadge
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ * 
  */
 
 (function ($) {
