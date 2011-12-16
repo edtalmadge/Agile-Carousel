@@ -16,9 +16,16 @@
             timer: 0,
             continuous_scrolling: false,
             transition_type: "slide",
+            carousel_data: [],
+            carousel_outer_width: 600,
+            slide_width: 600,
+            slide_height: 400,
+            carousel_outer_height: 400,
             transition_time: 600,
 			number_slides_visible: 1,
+			persistent_content: "",
 			change_on_hover: "",
+            no_control_set: "",
             control_set_1: "",
             control_set_2: "",
             control_set_3: "",
@@ -31,10 +38,8 @@
 
         return this.each(function () {
 
-            var combined_slide_width = 0;
             var number_of_slides = 0;
             var ac_html = "";
-            var ac_content = "";
             var ac_numbered_buttons = "";
             var ac_group_numbered_buttons = "";
             var ac_thumbnails = "";
@@ -51,7 +56,6 @@
             var button_type = "";
             var trigger_type = "";
             var button_action = "";
-            var go_direct = "";
             var ac_disabled = "";
             var current_slide_number = "";
             var next_slide_number = false;
@@ -62,7 +66,7 @@
             var continuous_scrolling = options.continuous_scrolling;
             var carousel_outer_width = options.carousel_outer_width;
             var carousel_outer_height = options.carousel_outer_height;
-            var carousel_data = options.carousel_data;
+            var carousel_data = jQuery(options.carousel_data);
             var change_on_hover = options.change_on_hover;
             var slide_width = options.slide_width;
             var slide_height = options.slide_height;
@@ -114,21 +118,17 @@
             for (i = 0; i < number_of_slides; i++) {
 
                 if (i === 0) {
-                    ac_group_numbered_buttons += "<div class='group_numbered_buttons_container button_container'>";
+                    ac_group_numbered_buttons = $("<div class='group_numbered_buttons_container button_container'></div>");
                 } // if
                 var curr_num = Math.floor((i + 1) / number_slides_visible) * number_slides_visible + 1;
                 if (curr_num !== new_num && curr_num <= number_of_slides) {
                     slide_number_conversion_array[j] = curr_num;
 
-                    ac_group_numbered_buttons += "<div class='slide_number_" + curr_num + " group_numbered_button slide_button " + get_trigger_type("group_numbered_buttons") + "' data-options='{\"button_type\":\"group_numbered_button\",\"button_action\":\"direct\",\"go_to\":" + curr_num + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'>" + (j + 1) + "</div>";
+                    ac_group_numbered_buttons.append($("<div class='slide_number_" + curr_num + " group_numbered_button slide_button " + get_trigger_type("group_numbered_buttons") + "' data-options='{\"button_type\":\"group_numbered_button\",\"button_action\":\"direct\",\"go_to\":" + curr_num + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'>" + (j + 1) + "</div>"));
 
                     new_num = curr_num;
-                    
-                    j++;
-                }
 
-                if (i === number_of_slides - 1) {
-                    ac_group_numbered_buttons += "</div>";
+                    j++;
                 }
 
             } // for
@@ -168,19 +168,27 @@
             ac_current_slide_number += "<span class='current_slide_number'>1</span>";
 
             // render beginning of div containers
-            ac_html += "<div class='agile_carousel' style='overflow: hidden; position: relative; width: " + carousel_outer_width + "px; height: " + carousel_outer_height + "px;'>";
-
             var obj = $(this);
+            var agile_carousel = $("<div class='agile_carousel' style='overflow: hidden; position: relative; width: " + carousel_outer_width + "px; height: " + carousel_outer_height + "px;'></div>");
+            var ac_slides_container = $("<div class='slides' style='width: " + slide_width * number_of_slides + "px; height: " + slide_height + "px;'></div>");
+            ac_numbered_buttons = $("<div class='numbered_buttons_container  button_container'></div>");
+            ac_thumbnails = $("<div class='thumbnail_buttons_container  button_container'></div>");
+            ac_content_buttons = $("<div class='content_buttons_container  button_container'></div>");
+            obj.append(agile_carousel);
+            agile_carousel.append(ac_slides_container);
             i = 1;
-            for (var key in carousel_data) {
-
-                if (carousel_data.hasOwnProperty(key)) {
-
-
-                    obj_inner = carousel_data[key];
-                    content = obj_inner.content;
-                    var thumbnail_button = obj_inner.thumbnail_button;
-                    content_button = obj_inner.content_button;
+            carousel_data.each(function() {
+                    var thumbnail_button;
+                    obj_inner = this;
+                    if(obj_inner instanceof HTMLElement) {
+                        content = $(obj_inner).hasClass("slide") ? obj_inner : $("slide", obj_inner);
+                        thumbnail_button = jQuery(".thumbnail_button",obj_inner);
+                        content_button = jQuery(".content_button",obj_inner);
+                    } else {
+                        content = obj_inner.content;
+                        thumbnail_button =obj_inner['thumbnail_button'];
+                        content_button =obj_inner['content_button'];
+                    }
 
 
                     ////////////////////////
@@ -188,45 +196,28 @@
                     ////////////////////////
 
 
-                    if (i === 1) {
-                        ac_html += "<div class='slides' style='width: " + slide_width * number_of_slides + "px; height: " + slide_height + "px;'>";
-                    } // if
-                    if (content) {
+                    if ((content instanceof jQuery) ? content.size()>0 : content) {
                         // render
-                        ac_html += "<div class='slide_" + i + " slide' style='border: none; margin: 0; padding: 0; height: " + slide_height + "px; width: " + slide_width + "px;'>" + content + "</div>";
+//                        var slide = $("<div class='slide_" + i + " slide' style='height: " + slide_height + "px; width: " + slide_width + "px;'></div>").append(content);
+                        var slide = $(content).css({height:slide_height+"px",width:slide_width+"px"}).addClass("slide_"+i);
+                        ac_slides_container.append(slide);
                     } // if obj_inner.content
-                    if (i === number_of_slides) {
-                        ac_html += "</div>";
-                    }
 
 
                     ////////////////////////
                     // Numbered Buttons
                     ////////////////////////
-                    if (i == 1) {
-                        ac_numbered_buttons += "<div class='numbered_buttons_container  button_container'>";
-                    } // if
-                    ac_numbered_buttons += "<div class='slide_number_" + i + " numbered_button slide_button " + get_trigger_type("numbered_buttons") + "' data-options='{\"button_type\":\"numbered_button\",\"button_action\":\"direct\",\"go_to\":" + i + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'>" + i + "</div>";
-
-                    if (i == number_of_slides) {
-                        ac_numbered_buttons += "</div>";
-                    }
-
+                    ac_numbered_buttons.append($("<div class='slide_number_" + i + " numbered_button slide_button " + get_trigger_type("numbered_buttons") + "' data-options='{\"button_type\":\"numbered_button\",\"button_action\":\"direct\",\"go_to\":" + i + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'>" + i + "</div>"));
 
 
                     ////////////////////////
                     // Thumbnails
-                    ////////////////////////						
+                    ////////////////////////
                     if (thumbnail_button) {
 
-                        if (i == 1) {
-                            ac_thumbnails += "<div class='thumbnail_buttons_container  button_container'>";
-                        } // if
-                        ac_thumbnails += "<div class='slide_number_" + i + " thumbnail_button slide_button " + get_trigger_type("thumbnails") + "'  data-options='{\"button_type\":\"thumbnail_button\",\"button_action\":\"direct\",\"go_to\":" + i + ",\"trigger_type\": \"" + ac_trigger_type + "\",\"disabled\": false}'>" + thumbnail_button + "</div>";
-
-                        if (i == number_of_slides) {
-                            ac_thumbnails += "</div>";
-                        } // if
+                        var thumb = $("<div class='slide_number_" + i + " thumbnail_button slide_button " + get_trigger_type("thumbnails") + "'  data-options='{\"button_type\":\"thumbnail_button\",\"button_action\":\"direct\",\"go_to\":" + i + ",\"trigger_type\": \"" + ac_trigger_type + "\",\"disabled\": false}'></div>");
+                        thumb.append(thumbnail_button);
+                        ac_thumbnails.append(thumb);
 
                     } // if
 
@@ -234,27 +225,21 @@
                     // Content Button
                     ////////////////////////
                     if (content_button) {
-
-                        if (i == 1) {
-                            ac_content_buttons += "<div class='content_buttons_container  button_container'>";
-                        } // if
-                        ac_content_buttons += "<div class='slide_number_" + i + " content_button_" + i + " content_button slide_button " + get_trigger_type("content_buttons") + "' data-options='{\"button_type\":\"content_button\",\"button_action\":\"direct\",\"go_to\":" + i + ",\"trigger_type\": \"" + ac_trigger_type + "\",\"disabled\": false}'><div class='content_button_inner'>" + content_button + "</div></div>";
-
-                        if (i == number_of_slides) {
-                            ac_content_buttons += "</div>";
-                        } // if
+                        var holder = $("<div class='slide_number_" + i + " content_button_" + i + " content_button slide_button " + get_trigger_type("content_buttons") + "' data-options='{\"button_type\":\"content_button\",\"button_action\":\"direct\",\"go_to\":" + i + ",\"trigger_type\": \"" + ac_trigger_type + "\",\"disabled\": false}'><div class='content_button_inner'></div></div>")
+                        $(".content_button_inner",holder).append(content_button);
+                        ac_content_buttons.append(holder);
                     }
 
                     i++;
 
-
-                } // if has own property
-            } // for
+            }); // for
             var create_control_set = function (set, set_number) {
-                var control_set_html = "";
+                var control_set = $("<div></div>");
                 if (set !== "") {
                     if (set_number) {
-                        control_set_html += "<div class='control_set_" + set_number + " control_set'><div class='control_set_" + set_number + "_inner control_set_inner'>";
+                        control_set = $("<div class='control_set_" + set_number + " control_set'><div class='control_set_" + set_number + "_inner control_set_inner'></div></div>");
+                        agile_carousel.append(control_set);
+                        control_set = $(".control_set_inner", control_set);
                     }
 
                     var control_set_array = set.split(",");
@@ -263,58 +248,56 @@
 
                         // numbered_buttons
                         if (control_set_array[j] == "numbered_buttons") {
-                            control_set_html += ac_numbered_buttons;
+                            control_set.append(ac_numbered_buttons);
                         }
 
                         // group_numbered_buttons
                         if (control_set_array[j] == "group_numbered_buttons") {
-                            control_set_html += ac_group_numbered_buttons;
+                            control_set.append(ac_group_numbered_buttons);
                         }
 
                         // thumbnails
                         if (control_set_array[j] == "thumbnails") {
-                            control_set_html += ac_thumbnails;
+                            control_set.append(ac_thumbnails);
                         }
                         // content_buttons
                         if (control_set_array[j] == "content_buttons") {
-                            control_set_html += ac_content_buttons;
+                            control_set.append(ac_content_buttons);
                         }
                         // pause_button
                         if (control_set_array[j] == "pause_button") {
-                            control_set_html += ac_pause;
+                            control_set.append(ac_pause);
                         }
                         // previous_button
                         if (control_set_array[j] == "previous_button") {
-                            control_set_html += ac_previous_button;
+                            control_set.append(ac_previous_button);
                         }
                         // previous_button
                         if (control_set_array[j] == "next_button") {
-                            control_set_html += ac_next_button;
+                            control_set.append(ac_next_button);
                         }
                         // hover_previous_button
                         if (control_set_array[j] == "hover_previous_button") {
-                            control_set_html += ac_hover_previous_button;
+                            control_set.append(ac_hover_previous_button);
                         }
                         // hover_next_button
                         if (control_set_array[j] == "hover_next_button") {
-                            control_set_html += ac_hover_next_button;
+                            control_set.append(ac_hover_next_button);
                         }
                         // slide_count
                         if (control_set_array[j] == "slide_count") {
-                            control_set_html += ac_slide_count;
+                            control_set.append(ac_slide_count);
                         }
                         // current_slide_number
                         if (control_set_array[j] == "current_slide_number") {
-                            control_set_html += ac_current_slide_number;
+                            control_set.append(ac_current_slide_number);
                         }
 
                     } // for
-
-                    if (set_number) {
-                        control_set_html += "</div></div>";
+                    if(!set_number) {
+                        agile_carousel.append(control_set.children());
                     }
 
-                    ac_html += control_set_html;
 
                 } // if
             }; // function
@@ -339,18 +322,13 @@
                 create_control_set(no_control_set);
             } // if
             if (persistent_content) {
-                ac_html += persistent_content;
+                agile_carousel.append($(persistent_content));
             }
 
-            ac_html += "</div>";
-
-            obj.html(ac_html);
-
             var ac_slides = obj.find(".slide");
-            var ac_slides_container = obj.find(".slides");
             var ac_slide_buttons = obj.find(".slide_button");
             var ac_slide_buttons_length = ac_slide_buttons.length;
-            var agile_carousel = obj.find(".agile_carousel");
+
 
             var ac_previous_buttons = obj.find(".previous_button, .hover_previous_button");
             var ac_previous_buttons_length = ac_previous_buttons.length;
@@ -366,7 +344,7 @@
             var hover_next_button = obj.find(".hover_next_button");
             var hover_next_button_length = hover_next_button.length;
 
-            
+
             function disable_buttons(slide_num) {
 
                 if (continuous_scrolling === false && number_slides_visible < 2) {
@@ -415,7 +393,7 @@
                     }
 
                 } // if
-				
+
                 if (continuous_scrolling === false && number_slides_visible > 1) {
 
                     // if first slide
@@ -482,7 +460,7 @@
                 obj.find(".ac_selected").removeClass("ac_selected");
                 obj.find(".slide_number_" + slide_num).addClass("ac_selected");
             }
-            
+
             // prepare carousel for number_slides_visible = 1
             if (number_slides_visible == 1) {
                 ac_slides.eq(0).css({
@@ -705,7 +683,7 @@
                             }, {
                                 duration: transition_time
                             });
-							
+
                         } // if transition type is slide										
 
 
@@ -754,7 +732,7 @@
 
 
 
-                        } // if transition type is slide	
+                        } // if transition type is slide
                     } // if current slide is not the next slide
                 } // if slide button is not disabled && transition complete
 
@@ -762,18 +740,18 @@
                 add_selected_class(next_slide_number);
 
             } // transition_slides;
-			
+
 
 
 
 			/////////////////////
 			///////// button behavior
 			////////////////////
-			
-			
+
+
             var agile_carousel_buttons_click = obj.find(".ac_click");
             var agile_carousel_buttons_hover = obj.find(".ac_hover");
-			
+
             // start timer
             if(timer !== 0){
                 ac_timer = setInterval(timer_transition, timer);
@@ -795,7 +773,7 @@
 			/////////////////
 			//////// click button
 			////////////////
-		
+
 			 $(agile_carousel_buttons_click).click(function(){
 				 pause_slideshow();
 				if(obj.find(':animated').length < 1){
@@ -805,26 +783,26 @@
 					// don't use timer on next & previous buttons... causes strage, infinite cycle
 					if($this.data("options").button_action != "next" && $this.data("options").button_action != "previous") {
 							function check_transition(){
-									
+
 									if(ac_slides_container.find(':animated').length < 1){
 										transition_slides($this.data().options);
 										clearInterval($this.data("options").timeout);
 									} // if
 								} // function
-								
-							t = setInterval(check_transition,30);	
-								
+
+							t = setInterval(check_transition,30);
+
 							$this.data("options").timeout = t;
 					}// if
 				} // else
-			
+
 			}); // click
-			
-			
+
+
 			/////////////////
 			//////// hover button
 			////////////////
-			
+
 			$(agile_carousel_buttons_hover).hover(function() {
 				pause_slideshow();
     			if(ac_slides_container.find(':animated').length < 1){
@@ -832,21 +810,21 @@
 
 				} else {
 						$this = $(this);
-						
+
 						function check_transition(){
-								
+
 								if(ac_slides_container.find(':animated').length < 1){
 									transition_slides($this.data().options);
 									clearInterval($this.data("options").timeout);
 								} // if
 							} // function
-							
-						t = setInterval(check_transition,30);	
-							
+
+						t = setInterval(check_transition,30);
+
 						$this.data("options").timeout = t;
-					
+
 					} // else
-				
+
 				}, function() {
     				$this = $(this);
 					clearInterval($this.data("options").timeout);
@@ -867,12 +845,12 @@
                 "trigger_type": "ac_click"
             };
 
-			
+
             function timer_transition() {
                 transition_slides(timer_data);
             }
 
-           
+
 
             function play_slideshow() {
                 clearInterval(ac_timer);
@@ -897,7 +875,7 @@
             }); // click
 
             // hover previous and hover next buttons
-            
+
             $('.hover_previous_next_button').hover(function() {
                 $(this).find(".hover_previous_next_button_inner").stop().fadeTo("fast", 0.85);
             },
