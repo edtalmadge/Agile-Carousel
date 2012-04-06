@@ -23,7 +23,8 @@
             control_set_2: "",
             control_set_3: "",
             control_set_4: "",
-            control_set_5: ""
+            control_set_5: "",
+            elements_container: "",
         };
 
         options = $.extend(defaults, options);
@@ -83,6 +84,19 @@
 			var $this = "";
 			var timer_data = "";
 			var ac_timer = "";
+
+            // Data from source elements?
+            if (!carousel_data) {
+                carousel_data = [];
+                
+                // Get the children as the data elements and remove from the container
+                var cont = $(this);
+                cont.children().each(function(i,ele) {
+                    ele = $(ele);
+                    carousel_data[i] = {content: ele.wrap('<div>').parent().html()};
+                    ele.remove();
+                });
+            }
 
             // get the number of slides
             $.each(carousel_data, function (key, value) {
