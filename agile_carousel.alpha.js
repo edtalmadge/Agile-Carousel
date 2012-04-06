@@ -754,7 +754,60 @@
 
 
 
-                        } // if transition type is slide	
+                        } // if transition type is fade
+                        
+                        /////////////////////////////////
+                        /////////////////////////////////
+                        ///// Fade Transition - 1 slide visible
+                        /////////////////////////////////
+                        /////////////////////////////////
+                        if (transition_type == "crossfade" && number_slides_visible == 1) {
+
+                            //if(trigger_type == "ac_hover"){
+                            //ac_slides.stop();
+                            //}
+                            // change slide position
+                            // rest of the slides 
+                            ac_slides.not(current_slide, next_slide).css({
+                                "top": "-5000px",
+                                "left": 0,
+                                "z-index": 0,
+                                "opacity": 0
+                            });
+
+                            // next slide
+                            if (button_action) {
+                                next_slide.css({
+                                    "top": 0,
+                                    "left": 0,
+                                    "z-index": 20
+                                });
+
+                                // current slide
+                                current_slide.css({
+                                    "z-index": 10,
+                                    "opacity": 1
+                                });
+
+
+                            } // if
+                            // animate slides
+                            next_slide.stop().animate({
+                                "opacity": 1
+                            }, {
+                                duration: transition_time,
+                                complete: fade_complete
+                            });
+                            current_slide.stop().animate({
+                                "opacity": 0
+                            }, {
+                                duration: transition_time,
+                                complete: fade_complete
+                            });
+
+
+                        } // if transition type is crossfade
+                         	
                     } // if current slide is not the next slide
                 } // if slide button is not disabled && transition complete
 
