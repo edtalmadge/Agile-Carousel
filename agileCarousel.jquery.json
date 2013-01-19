@@ -1,0 +1,33 @@
+{
+  "name": "agileCarousel",
+  "title": "Agile Carousel",
+  "description": "Create a carousel from a JSON data source. Highly configurable UI.",
+  "keywords": [
+    "slideshow",
+    "slide show",
+	"carousel",
+	"json"
+  ],
+  "version": "0.0.1",
+  "author": {
+    "name": "Ed Talmadge",
+    "url": "https://github.com/jquery/jquery-color/blob/2.1.2/AUTHORS.txt"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+	{
+      "type": "GPL Version 2",
+      "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+    }
+  ],
+  "bugs": "https://github.com/edtalmadge/Agile-Carousel/issues",
+  "homepage": "http://www.agilecarousel.com",
+  "docs": "http://www.agilecarousel.com/#usage",
+  "download": "https://github.com/edtalmadge/Agile-Carousel",
+  "dependencies": {
+    "jquery": ">=1.6"
+  }
+}
