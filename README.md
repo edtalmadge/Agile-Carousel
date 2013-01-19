@@ -9,5 +9,5 @@ Highly customizable so you can build according to your requirements. JSON data f
 =============
 
 
-<a href="http://agilecarousel.com/#examples">![View Slideshow Examples](http://agilecarousel.com/images/viewExamplesBanner.jpg "View Slideshow Examples")</a>
+<a href="http://agilecarousel.com/">![View Slideshow Examples](http://agilecarousel.com/images/viewExamplesBanner.jpg "View Slideshow Examples")</a>
 
