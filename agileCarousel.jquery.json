@@ -1,7 +1,7 @@
 {
   "name": "agileCarousel",
   "title": "Agile Carousel",
-  "description": "Create a carousel from a JSON data source. Highly configurable UI.",
+  "description": "Creates a carousel or slideshow from a JSON data source. Highly configurable UI. Custimize the look with plugin settings and your own CSS",
   "keywords": [
     "slideshow",
     "slide",
@@ -10,7 +10,7 @@
 	"slider",
 	"ui"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "Ed Talmadge"
   },
