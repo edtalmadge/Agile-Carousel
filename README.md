@@ -1,8 +1,8 @@
 Agile Carousel - JQuery Carousel / Slideshow Plugin
 =============
 
-Agile Carousel is a JQuery Plugin that allows you to create a slideshow or carosuel.
-Highly customizable so you can build according to your requirements. JSON data format is used.
+Agile Carousel is a JQuery Plugin that allows you to create a slideshow or carosuel.<br>
+Highly customizable so you can build according to your requirements. JSON data format is used.<br>
 See full documentation at http://www.agilecarousel.com!
 
 View Examples
