@@ -17,8 +17,8 @@
             continuous_scrolling: false,
             transition_type: "slide",
             transition_time: 600,
-			number_slides_visible: 1,
-			change_on_hover: "",
+            number_slides_visible: 1,
+            change_on_hover: "",
             control_set_1: "",
             control_set_2: "",
             control_set_3: "",
@@ -36,9 +36,11 @@
             var ac_html = "";
             var ac_content = "";
             var ac_numbered_buttons = "";
+            var ac_unnumbered_buttons = "";
             var ac_group_numbered_buttons = "";
             var ac_thumbnails = "";
             var ac_content_buttons = "";
+            var ac_content_panels = "";
             var ac_pause = "";
             var ac_previous_button = "";
             var ac_next_button = "";
@@ -80,9 +82,11 @@
             var content = "";
             var obj_inner = "";
             var content_button = "";
-			var $this = "";
-			var timer_data = "";
-			var ac_timer = "";
+            var content_panel = "";
+            var content_link = "";
+            var $this = "";
+            var timer_data = "";
+            var ac_timer = "";
 
             // get the number of slides
             $.each(carousel_data, function (key, value) {
@@ -181,6 +185,8 @@
                     content = obj_inner.content;
                     var thumbnail_button = obj_inner.thumbnail_button;
                     content_button = obj_inner.content_button;
+                    content_panel = obj_inner.content_panel;
+                    content_link = obj_inner.content_link;
 
 
                     ////////////////////////
@@ -212,11 +218,23 @@
                         ac_numbered_buttons += "</div>";
                     }
 
+                    ////////////////////////
+                    // UnNumbered Buttons
+                    ////////////////////////
+                    if (i == 1) {
+                        ac_unnumbered_buttons += "<div class='unnumbered_buttons_container  button_container'>";
+                    } // if
+                    ac_unnumbered_buttons += "<div class='slide_number_" + i + " unnumbered_button slide_button " + get_trigger_type("unnumbered_buttons") + "' data-options='{\"button_type\":\"unnumbered_button\",\"button_action\":\"direct\",\"go_to\":" + i + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'></div>";
+
+                    if (i == number_of_slides) {
+                        ac_unnumbered_buttons += "</div>";
+                    }
+
 
 
                     ////////////////////////
                     // Thumbnails
-                    ////////////////////////						
+                    ////////////////////////
                     if (thumbnail_button) {
 
                         if (i == 1) {
@@ -245,6 +263,19 @@
                         } // if
                     }
 
+                    ////////////////////////
+                    // Content Panel
+                    ////////////////////////
+                    if (content_panel) {
+                        if (i === 1) {
+                            ac_content_panels += "<div class='content_panel_container'>";
+                        } // if
+                        ac_content_panels += "<a href='" + content_link + "'><div class='content_panel_" + i + " content_panel' style='display:none;'>" + content_panel + "</div></a>";
+                        if (i === number_of_slides) {
+                            ac_content_panels += "</div>";
+                        }
+                    }
+
                     i++;
 
 
@@ -266,6 +297,11 @@
                             control_set_html += ac_numbered_buttons;
                         }
 
+                        // unnumbered_buttons
+                        if (control_set_array[j] == "unnumbered_buttons") {
+                            control_set_html += ac_unnumbered_buttons;
+                        }
+
                         // group_numbered_buttons
                         if (control_set_array[j] == "group_numbered_buttons") {
                             control_set_html += ac_group_numbered_buttons;
@@ -278,6 +314,10 @@
                         // content_buttons
                         if (control_set_array[j] == "content_buttons") {
                             control_set_html += ac_content_buttons;
+                        }
+                        // content_panels
+                        if (control_set_array[j] == "content_panels") {
+                            control_set_html += ac_content_panels;
                         }
                         // pause_button
                         if (control_set_array[j] == "pause_button") {
@@ -415,7 +455,7 @@
                     }
 
                 } // if
-				
+                
                 if (continuous_scrolling === false && number_slides_visible > 1) {
 
                     // if first slide
@@ -479,8 +519,11 @@
 
 
             function add_selected_class(slide_num) {
+                obj.find(".content_panel.ac_selected").css('display','none');
                 obj.find(".ac_selected").removeClass("ac_selected");
                 obj.find(".slide_number_" + slide_num).addClass("ac_selected");
+                obj.find(".content_panel_" + slide_num).addClass("ac_selected");
+                obj.find(".content_panel_" + slide_num).css('display','');
             }
             
             // prepare carousel for number_slides_visible = 1
@@ -705,8 +748,8 @@
                             }, {
                                 duration: transition_time
                             });
-							
-                        } // if transition type is slide										
+                            
+                        } // if transition type is slide                                        
 
 
                         /////////////////////////////////
@@ -754,7 +797,7 @@
 
 
 
-                        } // if transition type is slide	
+                        } // if transition type is slide    
                     } // if current slide is not the next slide
                 } // if slide button is not disabled && transition complete
 
@@ -762,18 +805,18 @@
                 add_selected_class(next_slide_number);
 
             } // transition_slides;
-			
+            
 
 
 
-			/////////////////////
-			///////// button behavior
-			////////////////////
-			
-			
+            /////////////////////
+            ///////// button behavior
+            ////////////////////
+            
+            
             var agile_carousel_buttons_click = obj.find(".ac_click");
             var agile_carousel_buttons_hover = obj.find(".ac_hover");
-			
+            
             // start timer
             if(timer !== 0){
                 ac_timer = setInterval(timer_transition, timer);
@@ -784,73 +827,73 @@
             function pause_slideshow() {
 
                 if(pause_button.length > 0){
-					pause_button.html("play");
-               		pause_button.data("options").paused = true;
-                	pause_button.addClass("play_button");
-				}
+                    pause_button.html("play");
+                    pause_button.data("options").paused = true;
+                    pause_button.addClass("play_button");
+                }
                 clearInterval(ac_timer);
             } // function
 
 
-			/////////////////
-			//////// click button
-			////////////////
-		
-			 $(agile_carousel_buttons_click).click(function(){
-				 pause_slideshow();
-				if(obj.find(':animated').length < 1){
-					transition_slides($(this).data().options);
-				} else {
-					$this = $(this);
-					// don't use timer on next & previous buttons... causes strage, infinite cycle
-					if($this.data("options").button_action != "next" && $this.data("options").button_action != "previous") {
-							function check_transition(){
-									
-									if(ac_slides_container.find(':animated').length < 1){
-										transition_slides($this.data().options);
-										clearInterval($this.data("options").timeout);
-									} // if
-								} // function
-								
-							t = setInterval(check_transition,30);	
-								
-							$this.data("options").timeout = t;
-					}// if
-				} // else
-			
-			}); // click
-			
-			
-			/////////////////
-			//////// hover button
-			////////////////
-			
-			$(agile_carousel_buttons_hover).hover(function() {
-				pause_slideshow();
-    			if(ac_slides_container.find(':animated').length < 1){
-					transition_slides($(this).data().options);
+            /////////////////
+            //////// click button
+            ////////////////
+        
+             $(agile_carousel_buttons_click).click(function(){
+                 pause_slideshow();
+                if(obj.find(':animated').length < 1){
+                    transition_slides($(this).data().options);
+                } else {
+                    $this = $(this);
+                    // don't use timer on next & previous buttons... causes strage, infinite cycle
+                    if($this.data("options").button_action != "next" && $this.data("options").button_action != "previous") {
+                            function check_transition(){
+                                    
+                                    if(ac_slides_container.find(':animated').length < 1){
+                                        transition_slides($this.data().options);
+                                        clearInterval($this.data("options").timeout);
+                                    } // if
+                                } // function
+                                
+                            t = setInterval(check_transition,30);   
+                                
+                            $this.data("options").timeout = t;
+                    }// if
+                } // else
+            
+            }); // click
+            
+            
+            /////////////////
+            //////// hover button
+            ////////////////
+            
+            $(agile_carousel_buttons_hover).hover(function() {
+                pause_slideshow();
+                if(ac_slides_container.find(':animated').length < 1){
+                    transition_slides($(this).data().options);
 
-				} else {
-						$this = $(this);
-						
-						function check_transition(){
-								
-								if(ac_slides_container.find(':animated').length < 1){
-									transition_slides($this.data().options);
-									clearInterval($this.data("options").timeout);
-								} // if
-							} // function
-							
-						t = setInterval(check_transition,30);	
-							
-						$this.data("options").timeout = t;
-					
-					} // else
-				
-				}, function() {
-    				$this = $(this);
-					clearInterval($this.data("options").timeout);
-			});
+                } else {
+                        $this = $(this);
+                        
+                        function check_transition(){
+                                
+                                if(ac_slides_container.find(':animated').length < 1){
+                                    transition_slides($this.data().options);
+                                    clearInterval($this.data("options").timeout);
+                                } // if
+                            } // function
+                            
+                        t = setInterval(check_transition,30);   
+                            
+                        $this.data("options").timeout = t;
+                    
+                    } // else
+                
+                }, function() {
+                    $this = $(this);
+                    clearInterval($this.data("options").timeout);
+            });
 
 
             ////////////////////////////
@@ -860,14 +903,14 @@
             ////////////////////////////
 
 
-			 timer_data = {
+             timer_data = {
                 "button_action": "next",
                 "button_type": "pause",
                 "disabled": false,
                 "trigger_type": "ac_click"
             };
 
-			
+            
             function timer_transition() {
                 transition_slides(timer_data);
             }
@@ -879,7 +922,7 @@
                 pause_button.html("pause");
                 pause_button.data("options").paused = false;
                 pause_button.addClass("pause_button");
-				pause_button.removeClass("play_button");
+                pause_button.removeClass("play_button");
                 transition_slides(timer_data);
                 ac_timer = setInterval(timer_transition, timer);
                 return ac_timer;

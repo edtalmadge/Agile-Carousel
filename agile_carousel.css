@@ -55,13 +55,13 @@ z-index: 4000;
 /*-- default styles for all button containers --*/
 
 .agile_carousel .button_container {
-z-index: 5000;	
+z-index: 5000;
 }
 
 /*-- default style for controls whose trigger type is "hover" --*/
 
 .agile_carousel .ac_hover {
-cursor:text;	
+cursor:text;
 }
 
 /*-- default style for controls which are currently selected
@@ -195,7 +195,7 @@ margin-top: 28px;
 /*-- individual slides --*/
 
 #multiple_slides_visible .slide_inner {
-text-align: center;	
+text-align: center;
 }
 #multiple_slides_visible .slide_inner {
 overflow: hidden;
@@ -285,7 +285,7 @@ background-image: url(../images/sprite_ac_hover.png);
 #multiple_slides_visible .control_set_1 .ac_disabled {
 background-image: url(../images/sprite_ac_disabled.png);
 }
-		
+
 /*-- .control_set_2 - includes: group_numbered_buttons --*/
 
 #multiple_slides_visible .control_set_2 {
@@ -616,4 +616,99 @@ overflow: hidden;
 float: left;
 border: 1px solid #000;
 margin: 3px 3px 0 3px;
+}
+
+/* -------------------------------------------- */
+/*-- #flavor_4 styles --*/
+/* -------------------------------------------- */
+
+/*-- outer container --*/
+
+#flavor_4 .agile_carousel {
+overflow: hidden;
+-moz-box-shadow: 0px 0px 4px #dfdfdf; /* FF3.5+ */
+-webkit-box-shadow: 0px 0px 0px #dfdfdf; /* Saf3.0+, Chrome */
+box-shadow: 0px 0px 4px #dfdfdf; /* Opera 10.5, IE9, Chrome 10+ */
+}
+
+#flavor_4 a:link,#flavor_4 a:visited{text-decoration:none;font-size:12px;font-family:Arial, Helvetica, sans-serif;outline:none;}
+#flavor_4 a:active,#flavor_4 a:hover{text-decoration:none;outline:none;}
+
+
+/*-- hide the captions --*/
+#flavor_4 .caption {
+display: none;
+}
+
+/*-- .control_set_1 - includes: content_panel --*/
+
+#flavor_4 .control_set_1 {
+left: 0px;
+bottom: 0px;
+width: 900px;
+height: 350px;
+float: left;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+opacity: 1;
+}
+
+#flavor_4 .content_panel {
+color: #FFF;
+padding-top: 15px;
+padding-left:75px;
+padding-right:440px;
+width: 385px;
+height: 335px;
+opacity:0;
+line-height: 16px;
+}
+
+#flavor_4 .content_panel_container {
+width: 900px;
+height: 350px;
+}
+
+/*-- .control_set_2 - includes: unnumbered_buttons --*/
+
+#flavor_4 .control_set_2 {
+left: 2px;
+bottom: 2px;
+height: 12px;
+float: left;
+margin: 2px 2px 2px 2px;
+
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+padding: 2px 2px 2px 2px;
+opacity: 1;
+}
+
+#flavor_4 .unnumbered_buttons_container {
+float: left;
+margin-right: 0px;
+margin-top: 1px;
+}
+#flavor_4 .unnumbered_button {
+background: #FFF;
+padding: 0 0px;
+font-size: 12px;
+margin-right: 2px;
+background-position: -95px 0;
+width: 10px;
+height: 10px;
+overflow: hidden;
+text-indent: 1000px;
+border-radius: 5px;
+opacity:.4;
+}
+#flavor_4 .unnumbered_button:hover, #flavor_4 .unnumbered_buttons_container .ac_selected {
+background:#FFF;
+opacity:1;
+}
+
+#flavor_4 .control_set_2 .slide_button {
+float: left;
 }
