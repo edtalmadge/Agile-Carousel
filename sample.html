@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Flavor 4 Sample</title>
+<link rel="stylesheet" href="agile_carousel.css" type='text/css'>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="agile_carousel.alpha.js"></script>
+<script type="text/javascript">
+  $.getJSON("sample_data_flavor4.php", function (data) {
+      $(document).ready(function () {
+          $("#flavor_4").agile_carousel({
+              carousel_data: data,
+              carousel_outer_height: 350,
+              carousel_height: 350,
+              slide_height: 350,
+              carousel_outer_width: 900,
+              slide_width: 900,
+              transition_type: "fade",
+              timer: 5000,
+              control_set_1: "content_panels",
+              control_set_2: "unnumbered_buttons"
+              
+          });
+      });
+  });
+
+  $(document).on('mouseover', '#flavor_4', function(event) {  
+      $('.content_panel').stop(true).animate({opacity: 1}, 150);
+    });
+  $(document).on('mouseout', '#flavor_4', function(event) {  
+      $('.content_panel').stop(true).animate({opacity: 0}, 150);
+    });
+</script>
+</head>
+<body>
+
+<div class="splash slideshow" id="flavor_4"></div>
+
+</body>
+<html>
