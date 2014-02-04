@@ -745,6 +745,7 @@
 
                             } // if
                             // animate slides
+                            current_slide.animate({'opacity':0});
                             next_slide.stop().animate({
                                 "opacity": 1
                             }, {
