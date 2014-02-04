@@ -68,6 +68,7 @@ cursor:text;
 such as the current slide number --*/
 
 .agile_carousel .ac_selected {
+	color:#FFF;
 }
 
 /*-- default style for disabled controls 
@@ -105,6 +106,19 @@ position: relative;
 /*-- hover next button --*/
 
 .hover_next_button {
+}
+
+/*-- numbered buttons container --*/
+
+.agile_carousel .circle_buttons_container {
+}
+
+/*-- numbered button --*/
+
+.agile_carousel .circle_button {
+float: left;
+margin-right:3px;
+font-size:35px;
 }
 
 /*-- numbered buttons container --*/

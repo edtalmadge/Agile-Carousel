@@ -9,7 +9,9 @@
  */
 
 (function ($) {
-
+	$.agile_carousel = {
+		version : 'alpha 1.1'
+	};
     $.fn.agile_carousel = function (options) {
 
         var defaults = {
@@ -23,18 +25,20 @@
             control_set_2: "",
             control_set_3: "",
             control_set_4: "",
-            control_set_5: ""
+            control_set_5: "",
+            elements_container: ""
         };
 
         options = $.extend(defaults, options);
 
 
-        return this.each(function () {
+        return this.each(function() {
 
             var combined_slide_width = 0;
             var number_of_slides = 0;
             var ac_html = "";
             var ac_content = "";
+            var ac_circle_buttons = "";			
             var ac_numbered_buttons = "";
             var ac_group_numbered_buttons = "";
             var ac_thumbnails = "";
@@ -83,6 +87,19 @@
 			var $this = "";
 			var timer_data = "";
 			var ac_timer = "";
+
+            // Data from source elements?
+            if (!carousel_data) {
+                carousel_data = [];
+                
+                // Get the children as the data elements and remove from the container
+                var cont = $(this);
+                cont.children().each(function(i,ele) {
+                    ele = $(ele);
+                    carousel_data[i] = {content: ele.wrap('<div>').parent().html()};
+                    ele.remove();
+                });
+            }
 
             // get the number of slides
             $.each(carousel_data, function (key, value) {
@@ -199,6 +216,17 @@
                         ac_html += "</div>";
                     }
 
+                    ////////////////////////
+                    // Circle Buttons
+                    ////////////////////////
+                    if (i == 1) {
+                        ac_circle_buttons += "<div class='circle_buttons_container  button_container'>";
+                    } // if
+                    ac_circle_buttons += "<div class='slide_number_" + i + " circle_button slide_button " + get_trigger_type("circle_buttons") + "' data-options='{\"button_type\":\"circle_button\",\"button_action\":\"direct\",\"go_to\":" + i + ", \"trigger_type\":\"" + ac_trigger_type + "\",\"disabled\": false}'>&bull;</div>";
+
+                    if (i == number_of_slides) {
+                        ac_circle_buttons += "</div>";
+                    }
 
                     ////////////////////////
                     // Numbered Buttons
@@ -261,6 +289,11 @@
 
                     for (j = 0; j < control_set_array.length; j++) {
 
+                        // circle_buttons
+                        if (control_set_array[j] == "circle_buttons") {
+                            control_set_html += ac_circle_buttons;
+                        }
+						
                         // numbered_buttons
                         if (control_set_array[j] == "numbered_buttons") {
                             control_set_html += ac_numbered_buttons;
@@ -751,10 +784,58 @@
                                 duration: transition_time,
                                 complete: fade_complete
                             });
+                        } // if transition type is fade	
+						
+                        /////////////////////////////////
+                        /////////////////////////////////
+                        ///// Fade Transition - 1 slide visible
+                        /////////////////////////////////
+                        /////////////////////////////////
+                        if (transition_type == "crossfade" && number_slides_visible == 1) {
+
+                            //if(trigger_type == "ac_hover"){
+                            //ac_slides.stop();
+                            //}
+                            // change slide position
+                            // rest of the slides 
+                            ac_slides.not(current_slide, next_slide).css({
+                                "top": "-5000px",
+                                "left": 0,
+                                "z-index": 0,
+                                "opacity": 0
+                            });
+
+                            // next slide
+                            if (button_action) {
+                                next_slide.css({
+                                    "top": 0,
+                                    "left": 0,
+                                    "z-index": 20
+                                });
+
+                                // current slide
+                                current_slide.css({
+                                    "z-index": 10,
+                                    "opacity": 1
+                                });
 
 
-
-                        } // if transition type is slide	
+                            } // if
+                            // animate slides
+                            next_slide.stop().animate({
+                                "opacity": 1
+                            }, {
+                                duration: transition_time,
+                                complete: fade_complete
+                            });
+                            current_slide.stop().animate({
+                                "opacity": 0
+                            }, {
+                                duration: transition_time,
+                                complete: fade_complete
+                            });
+                        } // if transition type is crossfade
+						
                     } // if current slide is not the next slide
                 } // if slide button is not disabled && transition complete
 
@@ -860,7 +941,7 @@
             ////////////////////////////
 
 
-			 timer_data = {
+            timer_data = {
                 "button_action": "next",
                 "button_type": "pause",
                 "disabled": false,
@@ -876,10 +957,12 @@
 
             function play_slideshow() {
                 clearInterval(ac_timer);
-                pause_button.html("pause");
-                pause_button.data("options").paused = false;
-                pause_button.addClass("pause_button");
-				pause_button.removeClass("play_button");
+				if(pause_button.length > 0){
+					pause_button.html("pause");
+					pause_button.data("options").paused = false;
+					pause_button.addClass("pause_button");
+					pause_button.removeClass("play_button");
+				}
                 transition_slides(timer_data);
                 ac_timer = setInterval(timer_transition, timer);
                 return ac_timer;
@@ -905,6 +988,29 @@
             function() {
                 $(this).find(".hover_previous_next_button_inner").stop().fadeTo("fast", 0.00);
             }); // hover
+
+
+			// Public Functions
+			$.agile_carousel.play = function() {
+				play_slideshow();
+			};
+			$.agile_carousel.pause = function() {
+				pause_slideshow();
+			};
+			$.agile_carousel.goto = function(slideNumber) {
+				var slide_data = "";
+				
+	            slide_data = {
+					"button_action": "direct",
+					"button_type": "pause",
+					"go_to": slideNumber,
+					"disabled": false,
+					"trigger_type": "ac_click"
+				};
+				
+				transition_slides(slide_data);
+			}
+
 
         }); // each
     }; // function
